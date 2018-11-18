@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "Journals";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+            <p>
+                A platform to publish your journals, and subscribe for other journals as well !
+            </p>
+        </div>
+    </section>
+}
+<h3>Looking where to start ?</h3>
+@if (User.IsInRole("Publisher"))
+{
+    <p>
+        To publish your journals  start <b>@Html.ActionLink("here", "Index", "Publisher") </b>
+    </p>
+}
+<p>
+    To subscribe for journals start <b>@Html.ActionLink("here", "Index", "Subscriber") </b>
+</p>

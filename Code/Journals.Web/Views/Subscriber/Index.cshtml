@@ -1,0 +1,83 @@
+﻿@model List<Journals.Repository.DTO.UserJournal>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Style
+{
+    <style type="text/css">
+        .table {
+            table-layout: fixed;
+        }
+
+            .table td {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+        .error_msg {
+            color: red;
+        }
+    </style>
+}
+
+<h2>List of Journals for Subscription</h2>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="error_msg">@ViewBag.ErrorMessage </div>
+}
+else
+{
+    <table class="table table-condensed table-striped">
+
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Action</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @if (item.IsSubscribed)
+                        {
+                            @Html.ActionLink("Un Subscribe", "UnSubscribe", new { id = item.Id })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Subscribe", "Subscribe", new { id = item.Id })
+                        }
+                    </td>
+                    <td>
+@if (item.IsSubscribed)
+{
+                        @Html.ActionLink("Browse Journal", "GetFile", new { Id = item.Id }, new { target = "_blank" })
+}
+                    </td>
+                    <td>
+@if (item.IsSubscribed)
+{
+                        @Html.ActionLink("View Issues", "Issues", new { journalID = item.Id })
+}
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
